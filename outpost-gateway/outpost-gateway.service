@@ -1,0 +1,19 @@
+[Unit]
+Description=Outpost Gateway — Samsung Sentinel
+After=docker.service network-online.target
+Requires=docker.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/home/backup/outpost-gateway/start_gateway.sh
+ExecStop=/usr/bin/docker stop outpost-gateway outpost-auth-proxy
+ExecStopPost=/usr/bin/docker rm -f outpost-gateway outpost-auth-proxy
+User=backup
+Group=backup
+Environment=SESSION_SECRET=crosbysucks04
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,19 @@
+[Unit]
+Description=Outpost Auth Proxy — Samsung Gateway Session Manager
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=backup
+Group=backup
+WorkingDirectory=/home/backup/outpost-gateway
+ExecStart=/usr/bin/python3 /home/backup/outpost-gateway/auth_proxy.py
+Restart=always
+RestartSec=5
+Environment=OUTPOST_API=http://192.168.0.107:8000
+Environment=OUTPOST_UI=http://192.168.0.107:80
+Environment=SESSION_SECRET=crosbysucks04
+
+[Install]
+WantedBy=multi-user.target
